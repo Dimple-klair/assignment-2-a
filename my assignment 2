@@ -1,1 +1,133 @@
+The time required for servicing transmissions is normally distributed with μ = 45 minutes and σ = 8 minutes. The service manager plans to have work begin on the transmission of a customer’s car 10 minutes after the car is dropped off and the customer is told that the car will be ready within 1 hour from drop-off. What is the probability that the service manager cannot meet his commitment? 
 
+0.3875   
+0.2676   
+0.5   
+0.6987 
+ANS
+population mean- 45 
+population standard deviation- 8
+To finish in 1 hour we must have p(x<=50)
+Now we have to p(x>=50)
+So, p(x>=50)
+Z score = (Value - Mean)/SD  
+
+Z score = 50-45/8
+=0.625
+
+Now, p(x<=50) ---------> 1 – p(x>=50)
+
+from scipy import stats
+1-stats.norm.cdf(0.625)
+=0.26598552904870054
+
+
+Hence, the probability that the service manager cannot meet his commitment is 
+B.     0.2676   
+
+
+The current age (in years) of 400 clerical employees at an insurance claims processing center is normally distributed with mean μ = 38 and Standard deviation σ =6. For each statement below, please specify True/False. If false, briefly explain why.
+More employees at the processing center are older than 44 than between 38 and 44.
+A training program for employees under the age of 30 at the center would be expected to attract about 36 employees.
+ANS
+A).
+Mean = 38, SD = 6
+Z score = (Value - Mean)/SD 
+Z score for 44  = (44 - 38)/6  = 1  
+P(x>=44) -------- > 1- p(x<=44)
+P(x<=44)
+stats.norm.cdf(1)
+0.8413447460685429
+= 84.13 %  
+ 
+People above 44 age = 100 - 84.13 =  15.87%  
+P(x>=44)
+1-stats.norm.cdf(1)
+0.15865525393145707
+
+= 15%
+ 
+Z score for 38 = (38 - 38)/6  = 0
+stats.norm.cdf(0)
+= 0.5
+=50%
+Hence,84-50=34%
+So, the statement more employees at the processing center are older than 44 than between 38 and 44 is TRUE.
+
+B).
+
+probabilty of employees less than age of 30 =  Pr(X<30).
+Z=30-38/6
+= -1.33
+= 0.09175913565028077
+
+So, for employees under the age of 30, probability will be = 0.091*400
+=36.4  So it’s TRUE
+
+3.If X1 ~ N(μ, σ2) and X2 ~ N(μ, σ2) are iid normal random variables, then what is the difference between 2 X1 and X1 + X2? Discuss both their distributions and parameters. 
+ANS
+If  X ∼ N(µ1, σ1^2 ), and  Y ∼ N(µ2, σ2^2 ) are two independent  random variables 
+Then, X + Y ∼ N(µ1 + µ2, σ1^2 + σ2^2 ) and  X − Y ∼ N(µ1 − µ2, σ1^2 + σ2^2 ) 
+
+In the same way if, Z = aX + bY , where X and Y are as defined above, i.e Z is linear combination of X and Y , then Z ∼ N(aµ1 + bµ2, a^2σ1^2 + b^2σ2^2 )
+
+2X1 ~ N (2 u,4 σ^2) and X1+X2 ~ N(µ + µ, σ^2 + σ^2 ) ~ N(2 u, 2σ^2 )
+2X1-(X1+X2) = N( 4µ,6 σ^2)
+4.Let X ~ N(100, 202). Find two values, a and b, symmetric about the mean, such that the probability of the random variable taking a value between them is 0.99. 
+
+90.5, 105.9 
+80.2, 119.8 
+22, 78 
+48.5, 151.5 
+90.1, 109.9
+ANS
+from scipy import stats
+from scipy.stats import norm
+
+stats.norm.interval(0.99,100,20)
+output= (48.48341392902199, 151.516586070978)
+
+5. Consider a company that has two different divisions. The annual profits from the two divisions are independent and have distributions Profit1 ~ N(5, 32) and Profit2 ~ N(7, 42) respectively. Both the profits are in $ Million. Answer the following questions about the total profit of the company in Rupees. Assume that $1 = Rs. 45
+Specify a Rupee range (centered on the mean) such that it contains 95% probability for the annual profit of the company.
+Specify the 5th percentile of profit (in Rupees) for the company
+
+Which of the two divisions has a larger probability of making a loss in a given year?
+ANS
+A)
+import numpy as np
+from scipy import stats
+from scipy.stats import norm
+
+Mean = 5+7
+print('Mean Profit is Rs', Mean*45,'Million')
+
+= Mean Profit is Rs 540 Million
+
+
+SD = np.sqrt((9)+(16))
+print('Standard Deviation is Rs', SD*45, 'Million')
+
+= Standard Deviation is Rs 225.0 Million
+
+print('Range is Rs',(stats.norm.interval(0.95,540,225)),'in Millions')
+
+= Range is Rs (99.00810347848784, 980.9918965215122) in Millions
+ 
+B)
+In order to calculate 5th Percentile, we use the formula X=μ + Zσ
+## from z table, 5 percentile = -1.645
+X= 540+(-1.645)*(225)
+print('5th percentile of profit (in Million Rupees) is',np.round(X,))
+ 
+= 5th percentile of profit (in Million Rupees) is 170.0
+ 
+C).
+# Probability of Division 1 making a loss P(X<0)
+stats.norm.cdf(0,5,3) 
+
+0.0477903522728147
+ 
+# Probability of Division 2 making a loss P(X<0)
+stats.norm.cdf(0,7,4)
+ 
+0.040059156863817086  
